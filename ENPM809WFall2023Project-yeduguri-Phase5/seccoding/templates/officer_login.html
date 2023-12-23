@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        .login-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .register-link {
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Officer Login</h1>
+
+    <div class="login-container">
+        <form action="/officer_login/" method="POST">
+            {% csrf_token %}
+
+            <div>
+                {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+            </div>
+
+            <label for="officer_id">Your ID:</label>
+            <input type="text" id="officer_id" name="officer_id" pattern="[0-9]{1,4}"  required>
+
+            <br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <br>
+<!-- Display the custom captcha -->
+<div class="captcha-container">
+    <p id="captcha">Captcha: {{ num1 }} + {{ num2 }} = ?</p>
+    <input type="text" id="captcha-input" name="captcha_input" required>
+</div>
+
+<br>
+
+<input type="submit" class="login-button">
+
+</form>
+
+</div>
+
+<script>
+// Function to generate a random number within a given range
+function getRandomNumber(min, max) {
+return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Generate two random numbers
+var num1 = getRandomNumber(1, 10000);
+var num2 = getRandomNumber(1, 10);
+
+// Display the captcha to the user
+document.getElementById('captcha').innerText = `Captcha: ${num1} + ${num2} = ?`;
+
+// Function to validate the captcha
+function validateCaptcha() {
+var userAnswer = parseInt(document.getElementById('captcha-input').value);
+var correctAnswer = num1 + num2;
+
+if (userAnswer === correctAnswer) {
+    return true; // Allow form submission
+} else {
+    alert('Incorrect captcha. Please try again.');
+    return false; // Prevent form submission
+}
+}
+</script>
+</body>
+</html>

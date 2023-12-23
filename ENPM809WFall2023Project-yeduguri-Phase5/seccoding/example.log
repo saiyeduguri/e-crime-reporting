@@ -1,0 +1,6 @@
+DEBUG:root:This message should go to the log file
+INFO:root:So should this
+WARNING:root:And this, too
+ERROR:root:And non-ASCII stuff, too, like Øresund and Malmö
+INFO:root:Unsuccessful Login attempt from: yeduguri@terpmail.umd.edu
+INFO:django.utils.autoreload:C:\Users\91944\projects\django-projects\ENPM809WFall2023Project-yeduguri\seccoding\ecr\views.py changed, reloading.

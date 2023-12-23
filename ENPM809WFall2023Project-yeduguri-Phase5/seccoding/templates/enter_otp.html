@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter OTP</title>
+</head>
+<body>
+    <div>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+
+    <form action="{% url 'enter_otp' %}" method="post">
+        {% csrf_token %}
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" pattern="[0-9]{6}" title="Please enter a valid 6-digit OTP" required><br><br>
+
+        <input type="submit" value="Submit OTP">
+    </form>
+</body>
+</html>

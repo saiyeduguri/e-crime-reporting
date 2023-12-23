@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Rate Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .form-label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .form-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zip Code Search</h1>
+    <div class="container">
+        <form action="/user_check_crime_rate/" method="POST">
+            {% csrf_token %}
+            <!-- Zip Code Input -->
+            <label class="form-label" for="zip_code">Enter Zip Code:</label>
+            <input class="form-field" type="text" id="zip_code" name="zip_code" required pattern="\d{5}" title="Enter a 5-digit number" />
+
+            <!-- Submit Button -->
+            <button class="form-button" type="submit">Submit</button>
+        </form>
+        <div>
+            {%for message in messages%}
+                {{message}}
+            {%endfor%}
+        </div>
+    <div class="container">
+        <div class="crime-item">
+            {%for inc in zip_inc%}
+            <h1>Crime Rate Results for Zip Code {{inc.zip}}</h1>
+            <h2>Crime {{ forloop.counter }}</h2>
+            <p><strong>Address:</strong> {{inc.incident_spot}}</p>
+            <p><strong>Date:</strong> {{inc.date}}</p>
+            <p><strong>Time:</strong> {{inc.time}}</p>
+            {%endfor%}
+        </div>
+
+    </div>
+</body>
+</html>

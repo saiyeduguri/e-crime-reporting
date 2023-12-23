@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Reported Successfully</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .success-message {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Incident Reported Successfully</h1>
+    <div class="container">
+        <p class="success-message">Your incident is reported. We will get back to you shortly. <br>
+Meanwhile, you can check the status of the reported incident using the home page. <br>
+You will be notified if there is any update regarding the incident.</p>
+
+        <!-- Home Button -->
+        <a href="{% url 'user_home' %}" class="home-button">Go to User Home</a>
+    </div>
+</body>
+</html>

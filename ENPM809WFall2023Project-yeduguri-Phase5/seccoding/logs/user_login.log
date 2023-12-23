@@ -1,0 +1,16 @@
+
+2023-11-15 10:09:04,947 - DEBUG - debug message
+2023-11-15 10:09:04,947 - INFO - info message
+2023-11-15 10:09:04,947 - WARNING - warn message
+2023-11-15 10:09:04,947 - ERROR - error message
+2023-11-15 10:09:04,947 - CRITICAL - critical message
+2023-11-15 10:09:13,543 - DEBUG - debug message
+2023-11-15 10:09:13,543 - INFO - info message
+2023-11-15 10:09:13,543 - WARNING - warn message
+2023-11-15 10:09:13,544 - ERROR - error message
+2023-11-15 10:09:13,544 - CRITICAL - critical message
+2023-11-15 10:10:24,208 - DEBUG - debug message
+2023-11-15 10:10:24,208 - INFO - info message
+2023-11-15 10:10:24,208 - WARNING - warn message
+2023-11-15 10:10:24,208 - ERROR - error message
+2023-11-15 10:10:24,208 - CRITICAL - critical message

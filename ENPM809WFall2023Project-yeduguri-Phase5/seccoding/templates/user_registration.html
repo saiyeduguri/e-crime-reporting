@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .form-label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .form-field {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-field.required {
+            border: 1px solid #e74c3c;
+        }
+
+        .form-field:focus {
+            border: 1px solid #007BFF;
+        }
+
+        .form-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Registration</h1>
+    <div class="container">
+        <form action="{% url 'user_registration' %}" method="POST">
+            <div>
+                {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+            </div>
+            {% csrf_token %}
+            <!-- Name -->
+            <label class="form-label" for="name">Name:</label>
+            <input class="form-field required" type="text" id="name" name="name" required>
+
+            <!-- Driving License or Real ID -->
+            <label class="form-label" for="id">Driving License or Real ID:</label>
+            <input class="form-field required" type="text" id="id" name="id" required>
+
+            <!-- Email -->
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-field required" type="email" id="email" name="email" required>
+
+            <!-- Phone Number -->
+            <label class="form-label" for="phone_number">Phone Number:</label>
+            <input class="form-field required" type="tel" id="phone_number" name="phone_number" pattern="[0-9]{10}" title="Enter a 10-digit phone number" required>
+
+            <!-- Address -->
+            <label class="form-label" for="address">Address:</label>
+            <input class="form-field required" type="text" id="address" name="address" required>
+
+            <!-- Zip Code -->
+            <label class="form-label" for="zip">Zip Code:</label>
+            <input class="form-field required" type="text" id="zip" name="zip" pattern="\d{5}" title="Enter a 5-digit zip code" required>
+
+            <!-- Password -->
+            <label class="form-label" for="password">Password:</label>
+            <input class="form-field required" type="password" id="password" name="password" required>
+            <span class="error-message" id="password-error">Password must be at least 8 characters long and include a combination of letters, numbers, and special characters.</span>
+
+            <!-- Confirm Password -->
+            <label class="form-label" for="confirm_password">Confirm Password:</label>
+            <input class="form-field required" type="password" id="confirm_password" name="confirm_password" required>
+            <span class="error-message" id="confirm-password-error">Passwords do not match.</span>
+            
+            <!-- JavaScript for Password Matching and Complexity -->
+            <script>
+                const passwordField = document.getElementById("password");
+                const confirmPasswordField = document.getElementById("confirm_password");
+                const passwordError = document.getElementById("password-error");
+                const confirmError = document.getElementById("confirm-password-error");
+
+                confirmPasswordField.addEventListener("input", () => {
+                    if (confirmPasswordField.value === passwordField.value) {
+                        confirmError.textContent = "";
+                        confirmPasswordField.setCustomValidity(""); // Passwords match
+                    } else {
+                        confirmError.textContent = "Passwords do not match.";
+                        confirmPasswordField.setCustomValidity("Passwords do not match");
+                    }
+                });
+
+               /* passwordField.addEventListener("input", () => {
+                    if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(passwordField.value)) {
+                        passwordError.textContent = "";
+                        passwordField.setCustomValidity("");
+                    } else {
+                        passwordError.textContent = "Password must be at least 8 characters long and include a combination of letters, numbers, and special characters.";
+                        passwordField.setCustomValidity("Password requirements not met");
+                    }
+                });
+                */
+            </script>
+
+            <!-- Submit Button -->
+            <input type="submit" class="form-button">
+        </form>
+    </div>
+</body>
+</html>

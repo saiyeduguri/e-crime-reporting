@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Report Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .form-label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .form-field {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-field.required {
+            border: 1px solid #e74c3c;
+        }
+
+        .form-field:focus {
+            border: 1px solid #007BFF;
+        }
+
+        .form-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Incident Report Form</h1>
+    <div class="container">
+        <form action="/user_report_incident/" method="post">
+            {% csrf_token %}
+            <div>
+                {%for message in messages%}
+                    {{message}}
+                {%endfor%}
+            </div>
+            <!-- Name -->
+            <label class="form-label" for="name">Name:</label>
+            <input class="form-field required" type="text" id="name" name="name" required>
+            <!-- Type -->
+            <label class="form-label" for="incident_type">Type of Incident:</label>
+            <input class="form-field required" type="text" id="incident_type" name="incident_type" required>
+            <!-- Email -->
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-field required" type="email" id="email" name="email" required>
+
+            <!-- Phone Number -->
+            <label class="form-label" for="phone_number">Phone Number:</label>
+            <input class="form-field required" type="tel" id="phone_number" name="phone_number" pattern="[0-9]{10}" title="Enter a 10-digit phone number" required>
+
+            <!-- Date -->
+            <label class="form-label" for="date">Date of Incident:</label>
+            <input class="form-field required" type="date" id="date" name="date" required>
+
+            <!-- Time -->
+            <label class="form-label" for="time">Time of Incident:</label>
+            <input class="form-field" type="time" id="time" name="time">
+
+            <!-- Area -->
+            <label class="form-label" for "incident_spot">Incident Spot/Address:</label>
+            <input class="form-field required" type="text" id="incident_spot" name="incident_spot" required>
+
+            <!-- Zip Code -->
+            <label class="form-label" for="zip">Zip Code:</label>
+            <input class="form-field required" type="text" id="zip" name="zip" pattern="\d{5}" title="Enter a 5-digit zip code" required>
+
+            <!-- Details of Victim -->
+            <label class="form-label" for="victim_details">Details of Victim (if any):</label>
+            <textarea class="form-field" id="victim_details" name="victim_details" rows="4"></textarea>
+
+            <!-- Details of Culprit -->
+            <label class="form-label" for="culprit_details">Details of Culprit (if any):</label>
+            <textarea class="form-field" id="culprit_details" name="culprit_details" rows="4"></textarea>
+
+            <!-- Submit Button -->
+            <button class="form-button" type="submit">Submit Report</button>
+        </form>
+        <script>
+    // Get the current date and time
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const currentDateFormatted = `${year}-${month}-${day}`;
+
+    const currentHour = String(currentDate.getHours()).padStart(2, '0');
+    const currentMinute = String(currentDate.getMinutes()).padStart(2, '0');
+    const currentTimeFormatted = `${currentHour}:${currentMinute}`;
+
+    // Set max attribute for date input
+    document.getElementById('date').setAttribute('max', currentDateFormatted);
+
+    // Set max attribute for time input
+    document.getElementById('time').setAttribute('max', currentTimeFormatted);
+</script>
+    </div>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" id="log-out-button">Log Out</button>
+    </form>
+</body>
+</html>

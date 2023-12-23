@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message Display</title>
+</head>
+<body>
+    <h1>Message Display Page</h1>
+    <div>
+        <h2>Messages:</h2>
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <a href="{% url 'officer_login' %}">Go back to Login</a>
+
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" id="log-out-button">Log Out</button>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        .login-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 10px;
+            background-color: #090909;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .register-link, .forgot-password-link {
+            margin-top: 10px;
+            text-decoration: none;
+            color: #ff0000;
+            display: block;
+        }
+
+        /* Add custom captcha styling */
+        .captcha-container {
+            margin-top: 20px;
+        }
+
+        #captcha {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #captcha-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Login</h1>
+
+    <div class="login-container">
+        <form action="{% url 'user_login' %}" method="POST" onsubmit="return validateCaptcha()">
+            {% csrf_token %}
+
+            <div>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+
+            <label for="email">Registered Email:</label>
+<input type="email" id="email" name="email" required>
+
+            
+
+            <br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <br>
+
+            <!-- Display the custom captcha -->
+            <div class="captcha-container">
+                <p id="captcha">Captcha: {{ num1 }} + {{ num2 }} = ?</p>
+                <input type="text" id="captcha-input" name="captcha_input" required>
+            </div>
+
+            <br>
+
+            <input type="submit" class="login-button">
+            
+        </form>
+        
+        <a href="{% url 'user_registration' %}" class="register-link">Register</a>
+        
+        <!-- Forgot Password link -->
+        <a href="{% url 'forgot_password' %}" class="forgot-password-link">Forgot Password?</a>
+    </div>
+
+    <script>
+        // Function to generate a random number within a given range
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Generate two random numbers
+        var num1 = getRandomNumber(1, 10);
+        var num2 = getRandomNumber(1, 10);
+
+        // Display the captcha to the user
+        document.getElementById('captcha').innerText = `Captcha: ${num1} + ${num2} = ?`;
+
+        // Function to validate the captcha
+        function validateCaptcha() {
+            var userAnswer = parseInt(document.getElementById('captcha-input').value);
+            var correctAnswer = num1 + num2;
+
+            if (userAnswer === correctAnswer) {
+                return true; // Allow form submission
+            } else {
+                alert('Incorrect captcha. Please try again.');
+                return false; // Prevent form submission
+            }
+        }
+    </script>
+</body>
+</html>

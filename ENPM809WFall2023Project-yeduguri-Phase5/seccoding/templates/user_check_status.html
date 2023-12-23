@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        
+        h1 {
+            color: #333;
+        }
+
+        .incident-list {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .incident-item {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Incident History</h1>
+    <div class="incident-list">
+        {% for inc in user_incident %}
+        <div class="incident-item">
+            
+            <h2>Incident {{ forloop.counter }}</h2>
+            <p><strong>Date:</strong> {{inc.date}}</p>
+            <p><strong>Time:</strong> {{inc.time}}</p>
+            <p><strong>Area:</strong> {{inc.incident_spot}}</p>
+            <p><strong>Type:</strong> {{inc.type}}</p>
+            <p><strong>Status:</strong> {{inc.status}}
+        </div>
+        {%endfor%}
+        
+        <a href="{% url 'user_home' %}"class="back-button">Back to Home</a>
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" id="log-out-button">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>

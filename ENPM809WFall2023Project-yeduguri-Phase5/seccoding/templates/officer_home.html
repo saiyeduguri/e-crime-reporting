@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Officer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .incident-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .incident-item {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        #emergency-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .status-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        /* Text field styles */
+        .text-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        /* Log Out button styles */
+        #log-out-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Officer Dashboard</h1>
+    <div>
+        {% for message in messages %}
+            <div style="background-color: #4CAF50; color: white; padding: 10px; margin: 10px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="container">
+        <h2>Incidents in Your Zip Code</h2>
+        <form action="{% url 'update_status' %}" method="post">
+            {% csrf_token %}
+            <ul class="incident-list">
+                {% for incident in inc %}
+                    <li class="incident-item">
+                        <p><strong>Name:</strong> {{ incident.name }}</p>
+                        <p><strong>Phone Number:</strong> {{ incident.phone_number }}</p>
+                        <p><strong>ID:</strong> {{ incident.id }}</p>
+                        <p><strong>Email:</strong> {{ incident.email }}</p>
+                        <p><strong>Address:</strong> {{ incident.date }}</p>
+                        <p><strong>Address:</strong> {{ incident.time }}</p>
+                        <p><strong>Address:</strong> {{ incident.victim_details }}</p>
+                        <p><strong>Address:</strong> {{ incident.culprit_details }}</p>
+                        <p><strong>Address:</strong> {{ incident.incident_spot }}</p>
+                        <p><strong>Status:</strong>
+                            <select class="status-select" name="status_{{ incident.id }}">
+                                <option value="received" {% if incident.status == 'received' %}selected{% endif %}>Received</option>
+                                <option value="under_investigation" {% if incident.status == 'under_investigation' %}selected{% endif %}>Under Investigation</option>
+                                <option value="closed" {% if incident.status == 'closed' %}selected{% endif %}>Closed</option>
+                            </select>
+                        </p>
+                        <input type="hidden" name="email_{{ incident.id }}" value="{{ incident.email }}">
+                        <button type="submit" name="incident_id" value="{{ incident.id }}">Update Status</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+        <form action="{% url 'send_emergency_alert' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="emergency_alert" placeholder="Enter emergency message" required>
+            <button type="submit">Send Emergency Alert</button>
+        </form>
+        <!-- Log Out button -->
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" id="log-out-button">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>
